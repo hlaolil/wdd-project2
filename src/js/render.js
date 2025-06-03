@@ -12,7 +12,8 @@ export function renderBooks(books) {
   const bookList = document.getElementById('books');
   bookList.innerHTML = '';
   if (books.length === 0) {
-    bookList.innerHTML = '<p class="text-center">No books found. Add books to your Zotero library.</p>';
+    bookList.innerHTML =
+      '<p class="text-center">No books found. Add books to your Zotero library.</p>';
     return;
   }
 

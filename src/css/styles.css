@@ -86,7 +86,8 @@ input#search:focus {
   display: none;
 }
 
-#loading, #error {
+#loading,
+#error {
   text-align: center;
   font-size: 1rem;
   margin: 20px 0;

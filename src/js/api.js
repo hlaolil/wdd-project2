@@ -9,9 +9,10 @@ export async function fetchBooks(search = '') {
   try {
     // Fetch books from Zotero
     const zoteroResponse = await fetch(url, {
-      headers: { 'Zotero-API-Key': zoteroApiKey }
+      headers: { 'Zotero-API-Key': zoteroApiKey },
     });
-    if (!zoteroResponse.ok) throw new Error('Failed to fetch books from Zotero');
+    if (!zoteroResponse.ok)
+      throw new Error('Failed to fetch books from Zotero');
     const books = await zoteroResponse.json();
 
     // Fetch cover images from Google Books
@@ -24,12 +25,18 @@ export async function fetchBooks(search = '') {
           const googleResponse = await fetch(
             `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${googleBooksApiKey}`
           );
-          if (!googleResponse.ok) throw new Error('Failed to fetch cover from Google Books');
+          if (!googleResponse.ok)
+            throw new Error('Failed to fetch cover from Google Books');
           const googleData = await googleResponse.json();
-          const cover = googleData.items?.[0]?.volumeInfo?.imageLinks?.thumbnail || 'https://via.placeholder.com/128x192?text=No+Cover';
+          const cover =
+            googleData.items?.[0]?.volumeInfo?.imageLinks?.thumbnail ||
+            'https://via.placeholder.com/128x192?text=No+Cover';
           return { ...book, cover };
         } catch (err) {
-          return { ...book, cover: 'https://via.placeholder.com/128x192?text=No+Cover' };
+          return {
+            ...book,
+            cover: 'https://via.placeholder.com/128x192?text=No+Cover',
+          };
         }
       })
     );

@@ -1,24 +1,40 @@
-import './css/styles.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
+import './css/styles.css';
+import { fetchBooks } from './js/api.js';
+import { formatAuthors, renderBooks } from './js/render.js';
 
+async function init() {
+  const searchInput = document.getElementById('search');
+  const loadingElement = document.getElementById('loading');
+  const errorElement = document.getElementById('error');
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+  async function loadBooks(search = '') {
+    loadingElement.classList.remove('hidden');
+    errorElement.classList.add('hidden');
+    try {
+      let books = await fetchBooks(search);
+      books = books.map(book => ({
+        ...book,
+        data: {
+          ...book.data,
+          author: formatAuthors(book.data.creators),
+        },
+      }));
+      renderBooks(books);
+    } catch (err) {
+      errorElement.textContent = `Error: ${err.message}`;
+      errorElement.classList.remove('hidden');
+    } finally {
+      loadingElement.classList.add('hidden');
+    }
+  }
 
-setupCounter(document.querySelector('#counter'))
+  // Initial load
+  await loadBooks();
+
+  // Search
+  searchInput.addEventListener('input', e => {
+    loadBooks(e.target.value);
+  });
+}
+
+init();
