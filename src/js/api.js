@@ -1,6 +1,6 @@
 const zoteroUserID = '14092961';
 const zoteroApiKey = 'NRyTbMyr4qRqeu2wkRS2nMhE'; // Note: Exposed for assignment; secure in production
-const googleBooksApiKey = 'AIzaSyBv43IPKG7LF8eMBy0-aLG7TLZrs4AR2hw'; // Note: Exposed for assignment; secure in production
+const googleBooksApiKey = 'AIzaSyDTMEaSFQP6pP-BvhTfCHCkP1BkRYXZ0Cw'; // Note: Exposed for assignment; secure in production
 
 export async function fetchBooks(search = '') {
   const baseUrl = `https://api.zotero.org/users/${zoteroUserID}/items?itemType=book&limit=10`;
