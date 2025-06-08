@@ -45,56 +45,90 @@ input#search:focus {
   border-radius: 5px;
   padding: 15px;
   display: flex;
+  align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.book-card:hover {
+  transform: scale(1.02);
 }
 
 .book-card img {
-  width: 100px;
-  height: 150px;
+  width: 80px;
+  height: 120px;
   object-fit: cover;
   margin-right: 15px;
   border-radius: 3px;
 }
 
-.book-details h2 {
-  font-size: 1.2rem;
-  font-style: italic;
-  margin: 0 0 10px;
+.book-card .turabian-reference {
+  font-size: 1rem;
+  color: #333;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+  display: none;
+  opacity: 0;
+}
+
+.modal:not(.hidden) {
+  display: flex;
+  opacity: 1;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+#modalTitle {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
   color: #333;
 }
 
-.book-details p {
+#modalSummary {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.modal-content img {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 3px;
+}
+
+.modal-content p {
   margin: 5px 0;
   color: #666;
-  font-size: 0.9rem;
-}
-
-.book-details .summary {
-  color: #555;
-}
-
-.book-details a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.book-details a:hover {
-  text-decoration: underline;
-}
-
-.hidden {
-  display: none;
-}
-
-#loading,
-#error {
-  text-align: center;
-  font-size: 1rem;
-  margin: 20px 0;
-}
-
-#error {
-  color: #dc3545;
 }
 
 @media (max-width: 600px) {
@@ -105,9 +139,16 @@ input#search:focus {
   .book-card {
     flex-direction: column;
     align-items: center;
+    text-align: center;
   }
 
   .book-card img {
+    margin-right: 0;
     margin-bottom: 10px;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 15px;
   }
 }
