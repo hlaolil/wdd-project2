@@ -11,8 +11,9 @@ export async function fetchBooks(search = '') {
     const zoteroResponse = await fetch(url, {
       headers: { 'Zotero-API-Key': zoteroApiKey },
     });
-    if (!zoteroResponse.ok)
+    if (!zoteroResponse.ok) {
       throw new Error('Failed to fetch books from Zotero');
+    }
     const books = await zoteroResponse.json();
 
     // Fetch cover images from Google Books
@@ -25,8 +26,9 @@ export async function fetchBooks(search = '') {
           const googleResponse = await fetch(
             `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${googleBooksApiKey}`
           );
-          if (!googleResponse.ok)
+          if (!googleResponse.ok) {
             throw new Error('Failed to fetch cover from Google Books');
+          }
           const googleData = await googleResponse.json();
           const cover =
             googleData.items?.[0]?.volumeInfo?.imageLinks?.thumbnail ||

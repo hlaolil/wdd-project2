@@ -17,6 +17,13 @@
       <div id="books" class="books-grid"></div>
       <div id="loading" class="hidden">Loading...</div>
       <div id="error" class="hidden"></div>
+      <!-- Modal for full summary, hidden by default -->
+      <div id="summaryModal" class="modal hidden">
+        <div class="modal-content" tabindex="0">
+          <h2 id="modalTitle"></h2>
+          <p id="modalSummary"></p>
+        </div>
+      </div>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>
