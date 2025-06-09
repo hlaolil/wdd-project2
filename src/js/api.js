@@ -4,7 +4,7 @@ const googleBooksApiKey = 'AIzaSyAWYTztLiF-PB0bnLg_gOenr7g7JKWJX_U'; // Only for
 
 // Cache key for localStorage
 const CACHE_KEY = 'bookCoversCache';
-const CACHE_EXPIRY = 7 * 24 * 60 * 60 * 1000; // Cache for 7 days (in milliseconds)
+const CACHE_EXPIRY = 30 * 24 * 60 * 60 * 1000; // Cache for 30 days (in milliseconds)
 
 /**
  * Fetches books from Zotero and adds cover images via Google Books API with local caching.
