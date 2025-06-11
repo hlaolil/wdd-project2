@@ -1,6 +1,6 @@
 const zoteroUserID = '14092961';
-const zoteroApiKey = 'NRyTbMyr4qRqeu2wkRS2nMhE'; // Only for dev/demo. Hide in production.
-const googleBooksApiKey = 'AIzaSyAWYTztLiF-PB0bnLg_gOenr7g7JKWJX_U'; // Only for dev/demo. Hide in production.
+const zoteroApiKey = 'NRyTbMyr4qRqeu2wkRS2nMhE'; // Hide in production.
+const googleBooksApiKey = 'AIzaSyAWYTztLiF-PB0bnLg_gOenr7g7JKWJX_U'; // Hide in production.
 
 // Cache key for localStorage
 const CACHE_KEY = 'bookCoversCache';
@@ -84,7 +84,7 @@ export async function fetchBooks(search = '') {
  * Tries `ISBN` field or identifies from extra metadata.
  */
 function extractISBN(data) {
-  if (data.ISBN) return data.ISBN;
+  if (data.ISBN) {return data.ISBN;}
 
   const extra = data.extra || '';
   const isbnMatch = extra.match(/ISBN(?:-13)?:?\s*([\d\-Xx]+)/);

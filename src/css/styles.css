@@ -157,7 +157,43 @@ header {
   background-color: #007bff;
   color: white;
   padding: 10px 0;
+  text-align: center; /* Added from your input */
+  margin: 5px 0; /* Added from your input */
 }
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  padding: 10px 5px; /* From your input */
+  background-color: #007bff; /* Consistent with header */
+  color: white;
+}
+
+header a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 5px; /* From your input */
+  text-align: center; /* From your input */
+  margin: 5px 0; /* From your input */
+  background-color: #007bff; /* Consistent with header */
+}
+
+header a.active {
+  text-decoration: underline;
+}
+
+header ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* Center the list items */
+}
+
+header ul li {
+  margin: 10px; /* From your input */
+}
+
 
 footer {
   background-color: #333;
