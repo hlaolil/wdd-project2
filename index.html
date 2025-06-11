@@ -1,30 +1,41 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BookHub</title>
-    <link rel="stylesheet" href="/src/css/styles.css" />
-  </head>
-  <body>
-    <div class="container">
-      <h1>BookHub: My Zotero Books</h1>
-      <input
-        type="text"
-        id="search"
-        placeholder="Search books by title or author..."
-      />
-      <div id="books" class="books-grid"></div>
-      <div id="loading" class="hidden">Loading...</div>
-      <div id="error" class="hidden"></div>
-      <!-- Modal for full summary, hidden by default -->
-      <div id="summaryModal" class="modal hidden">
-        <div class="modal-content" tabindex="0">
-          <h2 id="modalTitle"></h2>
-          <p id="modalSummary"></p>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BookHub</title>
+  <link rel="stylesheet" href="/src/css/styles.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="container">
+    <input type="text" id="search" placeholder="Search books by title or author...">
+    <button id="sortDate">Sort by Date</button>
+    <div id="books" class="books-grid"></div>
+    <div id="loading" class="hidden">Loading...</div>
+    <div id="error" class="hidden"></div>
+    <div id="summaryModal" class="modal hidden">
+      <div class="modal-content" tabindex="0">
+        <h2 id="modalTitle"></h2>
+        <p id="modalSummary"></p>
+        <button id="moreDetails">More</button>
       </div>
     </div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+  </div>
+  <div id="footer-placeholder"></div>
+  <script type="module">
+    // Dynamic header and footer
+    document.addEventListener('DOMContentLoaded', async () => {
+      const headerPlaceholder = document.getElementById('header-placeholder');
+      const footerPlaceholder = document.getElementById('footer-placeholder');
+      const [headerResponse, footerResponse] = await Promise.all([
+        fetch('header.html'),
+        fetch('footer.html')
+      ]);
+      headerPlaceholder.innerHTML = await headerResponse.text();
+      footerPlaceholder.innerHTML = await footerResponse.text();
+    });
+    import '/src/main.js';
+  </script>
+</body>
 </html>
