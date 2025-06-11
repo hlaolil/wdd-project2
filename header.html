@@ -45,16 +45,4 @@
       <li><a href="about.html">About</a></li>
     </ul>
   </nav>
-  <script type="module">
-    // Dynamic active link highlighting
-    document.addEventListener('DOMContentLoaded', () => {
-      const path = window.location.pathname;
-      const navLinks = document.querySelectorAll('nav a');
-      navLinks.forEach(link => {
-        if (link.href.includes(path.split('/').pop())) {
-          link.classList.add('active');
-        }
-      });
-    });
-  </script>
 </header>
