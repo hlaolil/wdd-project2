@@ -84,7 +84,9 @@ export async function fetchBooks(search = '') {
  * Tries `ISBN` field or identifies from extra metadata.
  */
 function extractISBN(data) {
-  if (data.ISBN) {return data.ISBN;}
+  if (data.ISBN) {
+    return data.ISBN;
+  }
 
   const extra = data.extra || '';
   const isbnMatch = extra.match(/ISBN(?:-13)?:?\s*([\d\-Xx]+)/);

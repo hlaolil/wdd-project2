@@ -9,7 +9,7 @@ export async function loadHeaderAndFooter() {
   try {
     const [headerResponse, footerResponse] = await Promise.all([
       fetch('header.html'),
-      fetch('footer.html')
+      fetch('footer.html'),
     ]);
     if (!headerResponse.ok || !footerResponse.ok) {
       throw new Error('Failed to fetch header or footer');
