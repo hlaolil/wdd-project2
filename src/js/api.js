@@ -12,7 +12,7 @@ const CACHE_EXPIRY = 30 * 24 * 60 * 60 * 1000; // Cache for 30 days (in millisec
  * @returns {Promise<Array>} Array of book items with `data` and `cover`.
  */
 export async function fetchBooks(search = '') {
-  const baseUrl = `https://api.zotero.org/users/${zoteroUserID}/items?itemType=book&limit=20`;
+  const baseUrl = `https://api.zotero.org/users/${zoteroUserID}/items?itemType=book&limit=100`;
   const url = search ? `${baseUrl}&q=${encodeURIComponent(search)}` : baseUrl;
 
   // Load existing cache
