@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  server: {
-    port: 5173,
-  },
+  base: './', // relative paths so the build works in a sub-folder (e.g. /wdd130/books/)
+  server: { port: 5173 },
 });

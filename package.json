@@ -1,17 +1,16 @@
 {
   "name": "bookhub",
-  "version": "2.0.0",
-  "description": "Boilerplate for WDD 330 SleepOutside project",
+  "version": "3.0.0",
+  "description": "BookHub: browse the books in a Zotero library with covers, summaries and Turabian citations",
   "main": "main.js",
   "scripts": {
     "start": "vite",
     "build": "vite build --emptyOutDir",
-    "lint": "eslint *.js src/**/*.js",
+    "lint": "eslint src",
     "format": "prettier --ignore-path ./.gitignore --write \"./**/*.{html,json,js,ts,css}\"",
-    "test": "jest",
     "preview": "vite preview"
   },
-  "author": "Shane Thompson",
+  "author": "Letlotlo Hlaoli",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.57.1",
@@ -33,17 +32,6 @@
     "last 3 ios_saf versions",
     "last 3 safari versions"
   ],
-  "dependencies": {
-    "esbuild": "^0.25.5",
-    "fdir": "^6.4.5",
-    "nanoid": "^3.3.11",
-    "picocolors": "^1.1.1",
-    "picomatch": "^4.0.2",
-    "postcss": "^8.5.4",
-    "rollup": "^4.41.1",
-    "source-map-js": "^1.2.1",
-    "tinyglobby": "^0.2.14"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hlaolil/wdd-project2.git"

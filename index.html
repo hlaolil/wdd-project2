@@ -3,34 +3,58 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BookHub: My Zotero Books</title>
-    <link rel="stylesheet" href="/src/css/styles.css" />
+    <title>BookHub — Letlotlo Hlaoli's library</title>
+    <meta name="description" content="The books in Letlotlo Hlaoli's Zotero library, with covers, summaries and Turabian citations." />
+    <meta name="theme-color" content="#0f2a44" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f2a44'/><text x='50%25' y='58%25' text-anchor='middle' dominant-baseline='middle' font-size='34'>📚</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./src/css/styles.css" />
+    <script type="module" src="./src/main.js"></script>
   </head>
   <body>
-    <header>
-        <h1>BookHub: My Zotero Books</h1>
-    </header>
-    <div class="container">
-      <input
-        type="text"
-        id="search"
-        placeholder="Search books by title or author..."
-      />
-      <div id="books" class="books-grid"></div>
-      <div id="loading" class="hidden">Loading...</div>
-      <div id="error" class="hidden"></div>
-      <div id="summaryModal" class="modal hidden">
-        <div class="modal-content" tabindex="0">
-          <h2 id="modalTitle"></h2>
-          <p id="modalSummary"></p>
+    <header class="hero">
+      <div class="hero-inner">
+        <a class="back" href="https://hlaolil.github.io/wdd130/">← Letlotlo Hlaoli</a>
+        <h1>BookHub</h1>
+        <p>The books on my shelf, from my Zotero library.</p>
+        <div class="toolbar">
+          <label class="search">
+            <span class="sr-only">Search books</span>
+            <input id="search" type="search" placeholder="Search title, author, publisher, subject…" autocomplete="off" />
+          </label>
+          <label>Sort
+            <select id="sort">
+              <option value="title">Title A–Z</option>
+              <option value="author">Author A–Z</option>
+              <option value="newest">Newest published</option>
+              <option value="oldest">Oldest published</option>
+              <option value="added">Recently added</option>
+            </select>
+          </label>
+          <label>Subject
+            <select id="tag"><option value="">All subjects</option></select>
+          </label>
         </div>
       </div>
-    </div>
+    </header>
+
+    <main class="wrap">
+      <div class="statusbar">
+        <p id="status" role="status">Loading your books…</p>
+        <button id="refresh" type="button" class="ghost">Refresh from Zotero</button>
+      </div>
+      <div id="books" class="grid" aria-live="polite"></div>
+    </main>
+
     <footer>
-      <p>© 2025 BookHub. All rights reserved.</p>
+      <p>BookHub by <a href="https://hlaolil.github.io/wdd130/">Letlotlo Hlaoli</a> · Library from <a href="https://www.zotero.org">Zotero</a> · Covers from <a href="https://openlibrary.org">Open Library</a></p>
     </footer>
-    <script type="module">
-      import '/src/main.js';
-    </script>
+
+    <dialog id="detail" aria-labelledby="d-title">
+      <form method="dialog" class="close-row"><button class="ghost" aria-label="Close">✕</button></form>
+      <div id="detail-body"></div>
+    </dialog>
   </body>
 </html>
