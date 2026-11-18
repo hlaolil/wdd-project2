@@ -74,6 +74,7 @@ function visible() {
 
 // ---------- rendering ----------
 function coverUrl(b) {
+  if (b.cover) return b.cover;
   return b.isbn ? `https://covers.openlibrary.org/b/isbn/${b.isbn}-M.jpg?default=false` : '';
 }
 
@@ -142,7 +143,8 @@ function showDetail(key) {
     </div>
     ${b.tags.length ? `<div class="tags">${b.tags.map(t => `<button type="button" class="tag" data-tag="${esc(t)}">${esc(t)}</button>`).join('')}</div>` : ''}
     <h3>Summary</h3>
-    <p class="${b.abstract ? '' : 'muted'}">${b.abstract ? esc(b.abstract) : 'No summary yet. Add one in the Abstract field in Zotero.'}</p>
+    <p class="summary ${b.abstract ? '' : 'muted'}">${b.abstract ? esc(b.abstract) : 'No summary yet. Add one in the Abstract field in Zotero.'}</p>
+    ${b.summarySource ? `<p class="muted small">Summary from ${esc(b.summarySource)}</p>` : ''}
     <h3>Turabian</h3>
     <p class="cite-label">Bibliography</p>
     <div class="cite"><p>${bib.html}</p><button type="button" class="ghost copy" data-copy="${esc(bib.text)}">Copy</button></div>

@@ -65,6 +65,8 @@ function toBook(item) {
     isbn,
     language: d.language || '',
     abstract: d.abstractNote || '',
+    summarySource: (d.extra || '').match(/^Summary source:\s*(.+)$/m)?.[1] || '',
+    cover: (d.extra || '').match(/^Cover:\s*(\S+)/m)?.[1] || '',
     url: d.url || '',
     tags: (d.tags || []).map(t => t.tag).filter(Boolean),
     added: d.dateAdded || '',

@@ -113,3 +113,6 @@ footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 2r
 .cw-actions .copy { padding: .2rem .7rem; font-size: .82rem; }
 .owned { color: var(--green); font-weight: 600; }
 .also { color: var(--muted); background: var(--sand); border-radius: 4px; padding: .05rem .4rem; font-size: .78rem; }
+
+.summary { white-space: pre-line; }
+.small { font-size: .82rem; margin-top: -.4rem; }
