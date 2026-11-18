@@ -12,6 +12,11 @@ The books in my Zotero library, shown as a bookshelf with covers, summaries and 
 - **Covers** from Open Library by ISBN (no API key); books without one get a coloured spine with the title.
 - **Book details**: publication facts, subjects, the Zotero abstract as summary, and Turabian bibliography and first-footnote entries with Copy buttons. Each book has its own link (`#book=KEY`).
 
+## PhD coursework reading lists
+
+The **PhD coursework** view lists the required and recommended readings from each PAThS course syllabus (BTH 9053, BTH 9103, BTH 9153, LDR 9053, MIS 9103, RES 9103, RES 9153, EDL 9053), grouped by course, with Turabian entries, Find and Copy buttons, an "In my Zotero" mark for books already in the library, and an export of any selection to a `.ris` file for Zotero.
+The lists live in `src/data/coursework.json`.
+
 ## Settings
 
 `src/js/config.js` holds the Zotero user ID and an optional API key.

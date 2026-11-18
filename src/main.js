@@ -1,5 +1,6 @@
 import { cachedBooks, fetchAllBooks } from './js/zotero.js';
 import { esc, authorLine, mainNames, bibliography, footnote } from './js/cite.js';
+import * as cw from './js/coursework.js';
 
 const $ = sel => document.querySelector(sel);
 let books = [];
@@ -28,6 +29,9 @@ async function load({ force = false } = {}) {
 
 function setBooks(list, savedAt) {
   books = list;
+  cw.setOwned(books);
+  $('#shelf-count').textContent = `(${books.length})`;
+  if (!$('#view-coursework').hidden) renderCw();
   fillTags();
   render();
   $('#refresh').title = `Last loaded ${new Date(savedAt).toLocaleString()}`;
@@ -219,4 +223,71 @@ document.addEventListener(
   true,
 );
 
+// ---------- views: Zotero shelf / PhD coursework ----------
+const cwState = { q: '', course: '', kind: '' };
+let cwShown = [];
+
+function showView() {
+  const view = location.hash.startsWith('#coursework') ? 'coursework' : 'shelf';
+  $('#view-shelf').hidden = view !== 'shelf';
+  $('#shelf-toolbar').hidden = view !== 'shelf';
+  $('#view-coursework').hidden = view !== 'coursework';
+  document.querySelectorAll('.switch a').forEach(a => a.classList.toggle('active', a.dataset.view === view));
+  if (view === 'coursework') renderCw();
+}
+
+function renderCw() {
+  cwShown = cw.renderCoursework($('#cw-list'), cwState);
+  const n = cwShown.length;
+  $('#cw-status').textContent = n === cw.items.length ? `${n} readings across ${cw.courses.length} courses` : `${n} of ${cw.items.length} readings`;
+  $('#cw-export').disabled = !n;
+}
+
+$('#cw-count').textContent = `(${cw.items.length})`;
+$('#cw-course').innerHTML += cw.courses
+  .map(c => `<option value="${esc(c.id)}">${esc(c.code)} ${esc(c.name)}</option>`)
+  .join('');
+
+let cwTyping;
+$('#cw-q').addEventListener('input', e => {
+  clearTimeout(cwTyping);
+  cwTyping = setTimeout(() => {
+    cwState.q = e.target.value;
+    renderCw();
+  }, 150);
+});
+$('#cw-course').addEventListener('change', e => {
+  cwState.course = e.target.value;
+  renderCw();
+});
+$('#cw-kind').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  cwState.kind = b.dataset.kind;
+  document.querySelectorAll('#cw-kind button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  renderCw();
+});
+$('#cw-list').addEventListener('click', async e => {
+  const copy = e.target.closest('.copy');
+  if (!copy) return;
+  try {
+    await navigator.clipboard.writeText(copy.dataset.copy);
+    copy.textContent = 'Copied ✓';
+  } catch {
+    copy.textContent = 'Select and copy';
+  }
+});
+$('#cw-export').addEventListener('click', () => {
+  const course = cw.courses.find(c => c.id === cwState.course);
+  const name = course ? course.code.replace(/\s+/g, '') : 'PhD-coursework';
+  const blob = new Blob([cw.toRis(cwShown)], { type: 'application/x-research-info-systems' });
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: `${name}-reading-list.ris` });
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+window.addEventListener('hashchange', () => {
+  if (!location.hash.startsWith('#book=')) showView();
+});
+
+showView();
 load();

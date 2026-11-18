@@ -83,3 +83,33 @@ footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 2r
   .statusbar { flex-wrap: wrap; }
 }
 @media (prefers-reduced-motion: reduce) { .book .cover { transition: none; } .book.skeleton .cover { animation: none; } }
+
+/* view switch */
+.switch { display: flex; gap: .4rem; margin: 0 0 1.1rem; flex-wrap: wrap; }
+.switch a { color: #dbe4ee; text-decoration: none; font-weight: 600; padding: .45rem 1rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.35); }
+.switch a.active { background: #fff; color: var(--navy); border-color: #fff; }
+.switch a span { font-weight: 400; opacity: .8; }
+
+/* coursework */
+.cw-controls { display: flex; flex-wrap: wrap; gap: .8rem 1.2rem; align-items: center; margin-bottom: 1rem; }
+.cw-search { flex: 1 1 280px; }
+.cw-search input { width: 100%; padding: .65rem 1rem; border: 1px solid var(--line); border-radius: 999px; }
+.cw-controls select { margin-left: .4rem; padding: .4rem .5rem; border: 1px solid var(--line); border-radius: 8px; max-width: 260px; }
+.chips { display: flex; gap: .4rem; }
+.chips button { padding: .35rem .9rem; border-radius: 999px; border: 1px solid var(--line); background: #fff; color: var(--navy); font-weight: 500; cursor: pointer; }
+.chips button[aria-pressed='true'] { background: var(--navy); color: #fff; border-color: var(--navy); }
+.cw-course { margin-bottom: 2.2rem; }
+.cw-course h2 { font-size: 1.35rem; margin: 0 0 .2rem; }
+.cw-course h2 .code { color: var(--green); }
+.cw-meta { color: var(--muted); font-size: .88rem; margin: 0 0 .8rem; }
+.cw-items { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+.cw-item { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: .75rem 1rem; }
+.cw-item.required { border-left: 4px solid var(--green); }
+.cw-kind { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.cw-kind.required { color: var(--green); }
+.cw-cite { margin: .2rem 0 .4rem; padding-left: 1.2rem; text-indent: -1.2rem; }
+.cw-actions { display: flex; flex-wrap: wrap; gap: .4rem .8rem; align-items: center; font-size: .86rem; }
+.cw-actions a { text-decoration: none; font-weight: 600; }
+.cw-actions .copy { padding: .2rem .7rem; font-size: .82rem; }
+.owned { color: var(--green); font-weight: 600; }
+.also { color: var(--muted); background: var(--sand); border-radius: 4px; padding: .05rem .4rem; font-size: .78rem; }
