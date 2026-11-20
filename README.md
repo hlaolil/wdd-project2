@@ -1,16 +1,17 @@
 # BookHub
 
-The books in my Zotero library, shown as a bookshelf with covers, summaries and ready-made Turabian citations.
+My Zotero library (books, articles, chapters, theses and web pages) shown as a bookshelf with covers, summaries and ready-made Turabian citations, organised by my Zotero folders, subjects and reading status.
 
 - Live: https://hlaolil.github.io/wdd130/books/
 
 ## What it does
 
-- Loads **every** book in the Zotero library (100 at a time) and keeps a copy in the browser for 6 hours, so it opens instantly; **Refresh from Zotero** reloads it.
+- Loads **every** item in the Zotero library and its folders (100 at a time) and keeps a copy in the browser for 6 hours, so it opens instantly; **Refresh from Zotero** reloads it.
 - **Search** across title, author, publisher, series, ISBN, subjects (Zotero tags) and summary.
 - **Sort** by title, author, newest, oldest or recently added; **filter by subject**.
 - **Covers** from Open Library by ISBN (no API key); books without one get a coloured spine with the title.
-- **Book details**: publication facts, subjects, the Zotero abstract as summary, and Turabian bibliography and first-footnote entries with Copy buttons. Each book has its own link (`#book=KEY`).
+- **Filters**: by **folder** (01 Dissertation, 02 Comprehensive exams, 03 PhD coursework, 04 Teaching & ministry and their sub-folders), by **subject** tag, and by **status**: ★ Key source, To read, Read and Cited in dissertation. Key sources get a ★ badge on the shelf.
+- **Details**: publication facts (journal, volume and pages for articles), status and subject tags, the folders it sits in, the Zotero abstract as summary, with a note when the summary is a written one rather than the publisher's, and Turabian bibliography and first-footnote entries (for books, chapters, articles, theses and web pages) with Copy buttons. Each book has its own link (`#book=KEY`).
 
 ## PhD coursework reading lists
 
