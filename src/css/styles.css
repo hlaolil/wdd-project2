@@ -354,55 +354,7 @@ footer {
   }
 }
 
-/* view switch */
-.switch {
-  display: flex;
-  gap: 0.4rem;
-  margin: 0 0 1.1rem;
-  flex-wrap: wrap;
-}
-.switch a {
-  color: #dbe4ee;
-  text-decoration: none;
-  font-weight: 600;
-  padding: 0.45rem 1rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-}
-.switch a.active {
-  background: #fff;
-  color: var(--navy);
-  border-color: #fff;
-}
-.switch a span {
-  font-weight: 400;
-  opacity: 0.8;
-}
 
-/* coursework */
-.cw-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem 1.2rem;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-.cw-search {
-  flex: 1 1 280px;
-}
-.cw-search input {
-  width: 100%;
-  padding: 0.65rem 1rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-}
-.cw-controls select {
-  margin-left: 0.4rem;
-  padding: 0.4rem 0.5rem;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  max-width: 260px;
-}
 .chips {
   display: flex;
   gap: 0.4rem;
@@ -420,67 +372,6 @@ footer {
   background: var(--navy);
   color: #fff;
   border-color: var(--navy);
-}
-.cw-course {
-  margin-bottom: 2.2rem;
-}
-.cw-course h2 {
-  font-size: 1.35rem;
-  margin: 0 0 0.2rem;
-}
-.cw-course h2 .code {
-  color: var(--green);
-}
-.cw-meta {
-  color: var(--muted);
-  font-size: 0.88rem;
-  margin: 0 0 0.8rem;
-}
-.cw-items {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 0.5rem;
-}
-.cw-item {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 0.75rem 1rem;
-}
-.cw-item.required {
-  border-left: 4px solid var(--green);
-}
-.cw-kind {
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.cw-kind.required {
-  color: var(--green);
-}
-.cw-cite {
-  margin: 0.2rem 0 0.4rem;
-  padding-left: 1.2rem;
-  text-indent: -1.2rem;
-}
-.cw-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 0.8rem;
-  align-items: center;
-  font-size: 0.86rem;
-}
-.cw-actions a {
-  text-decoration: none;
-  font-weight: 600;
-}
-.cw-actions .copy {
-  padding: 0.2rem 0.7rem;
-  font-size: 0.82rem;
 }
 .owned {
   color: var(--green);

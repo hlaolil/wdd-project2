@@ -6,17 +6,19 @@ import {
   bibliography,
   footnote,
 } from './js/cite.js';
-import * as cw from './js/coursework.js';
 
 const $ = sel => document.querySelector(sel);
 let books = [];
 let folders = [];
-const view = { q: '', sort: 'title', tag: '', folder: '', status: '' };
+const view = { q: '', sort: 'title', tag: '', folder: '', status: '', req: '' };
 
 // Tags that record where a reading is in my work, rather than its subject
 const STATUS = ['★ Key source', 'To read', 'Read', 'Cited in dissertation'];
 const isStatus = t => STATUS.includes(t);
-const subjects = b => b.tags.filter(t => !isStatus(t));
+// Course tags from the imported syllabi: "RES 9103", plus "RES 9103 required" or "RES 9103 recommended"
+const COURSE_TAG = /^[A-Z]{3} \d{4}( required| recommended)?$/;
+const subjects = b => b.tags.filter(t => !isStatus(t) && !COURSE_TAG.test(t));
+const courseOf = name => (String(name).match(/^[A-Z]{3} \d{4}/) || [''])[0];
 const TYPE_LABEL = {
   journalArticle: 'Article',
   bookSection: 'Chapter',
@@ -59,11 +61,6 @@ async function load({ force = false } = {}) {
 function setBooks(list, savedAt, folderList = []) {
   books = list;
   folders = folderList;
-  cw.setOwned(books);
-  $('#shelf-count').textContent = `(${books.length})`;
-  if (!$('#view-coursework').hidden) {
-    renderCw();
-  }
   fillTags();
   fillFolders();
   render();
@@ -133,6 +130,34 @@ function fillFolders() {
   $('#folder').parentElement.hidden = !folders.length;
 }
 
+// ---------- required / recommended (coursework folders only) ----------
+// The courses the chosen folder covers: one course, all of them, or none.
+function coursesInView() {
+  if (!view.folder) {return null;}
+  const path = folderPath(view.folder);
+  const code = path.split(' › ').map(courseOf).find(Boolean);
+  if (code) {return [code];}
+  return /PhD coursework/i.test(path) ? 'all' : null;
+}
+function readingKind(b) {
+  const courses = coursesInView();
+  if (!courses) {return '';}
+  const tags = b.tags.filter(t => COURSE_TAG.test(t) && (courses === 'all' || courses.includes(courseOf(t))));
+  if (tags.some(t => t.endsWith(' required'))) {
+    return 'required';
+  }
+  return tags.some(t => t.endsWith(' recommended')) ? 'recommended' : '';
+}
+function updateReqChips() {
+  const show = !!coursesInView();
+  $('#req-chips').hidden = !show;
+  if (!show && view.req) {setReq('');}
+}
+function setReq(req) {
+  view.req = req;
+  document.querySelectorAll('#req-chips button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.req === req)));
+}
+
 // ---------- filtering & sorting ----------
 const lastName = b => (mainNames(b).list[0]?.last || '~').toLowerCase();
 const plainTitle = b => b.title.replace(/^(the|a|an)\s+/i, '').toLowerCase();
@@ -155,6 +180,7 @@ function visible() {
     .filter(b => !inFolder || b.folders.some(k => inFolder.has(k)))
     .filter(b => !view.tag || b.tags.includes(view.tag))
     .filter(b => !view.status || b.tags.includes(view.status))
+    .filter(b => !view.req || readingKind(b) === view.req)
     .filter(b => {
       if (!words.length) {
         return true;
@@ -293,6 +319,7 @@ function showDetail(key) {
             .join('')}</div>`
         : ''
     }
+    ${b.tags.some(t => / (required|recommended)$/.test(t)) ? `<p class="muted small">Coursework: ${b.tags.filter(t => COURSE_TAG.test(t) && / (required|recommended)$/.test(t)).map(t => `${esc(courseOf(t))} (${t.endsWith('recommended') ? 'recommended' : 'required'})`).join(' · ')}</p>` : ''}
     ${b.folders.length ? `<p class="folders muted small">In ${b.folders.map(k => `<button type="button" class="folder-link" data-folder="${esc(k)}">${esc(folderPath(k))}</button>`).join(' · ')}</p>` : ''}
     <h3>Summary</h3>
     <p class="summary ${b.abstract ? '' : 'muted'}">${b.abstract ? esc(b.abstract) : 'No summary yet. Add one in the Abstract field in Zotero.'}</p>
@@ -339,6 +366,15 @@ $('#tag').addEventListener('change', e => {
 });
 $('#folder').addEventListener('change', e => {
   view.folder = e.target.value;
+  updateReqChips();
+  render();
+});
+$('#req-chips').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (!b) {
+    return;
+  }
+  setReq(b.dataset.req);
   render();
 });
 function setStatusFilter(status) {
@@ -388,6 +424,7 @@ $('#detail').addEventListener('click', async e => {
   if (fl) {
     view.folder = fl.dataset.folder;
     $('#folder').value = view.folder;
+    updateReqChips();
     $('#detail').close();
     render();
     return;
@@ -424,94 +461,4 @@ document.addEventListener(
   true
 );
 
-// ---------- views: Zotero shelf / PhD coursework ----------
-const cwState = { q: '', course: '', kind: '' };
-let cwShown = [];
-
-function showView() {
-  const view = location.hash.startsWith('#coursework') ? 'coursework' : 'shelf';
-  $('#view-shelf').hidden = view !== 'shelf';
-  $('#shelf-toolbar').hidden = view !== 'shelf';
-  $('#status-chips').hidden = view !== 'shelf';
-  $('#view-coursework').hidden = view !== 'coursework';
-  document
-    .querySelectorAll('.switch a')
-    .forEach(a => a.classList.toggle('active', a.dataset.view === view));
-  if (view === 'coursework') {
-    renderCw();
-  }
-}
-
-function renderCw() {
-  cwShown = cw.renderCoursework($('#cw-list'), cwState);
-  const n = cwShown.length;
-  $('#cw-status').textContent =
-    n === cw.items.length
-      ? `${n} readings across ${cw.courses.length} courses`
-      : `${n} of ${cw.items.length} readings`;
-  $('#cw-export').disabled = !n;
-}
-
-$('#cw-count').textContent = `(${cw.items.length})`;
-$('#cw-course').innerHTML += cw.courses
-  .map(
-    c => `<option value="${esc(c.id)}">${esc(c.code)} ${esc(c.name)}</option>`
-  )
-  .join('');
-
-let cwTyping;
-$('#cw-q').addEventListener('input', e => {
-  clearTimeout(cwTyping);
-  cwTyping = setTimeout(() => {
-    cwState.q = e.target.value;
-    renderCw();
-  }, 150);
-});
-$('#cw-course').addEventListener('change', e => {
-  cwState.course = e.target.value;
-  renderCw();
-});
-$('#cw-kind').addEventListener('click', e => {
-  const b = e.target.closest('button');
-  if (!b) {
-    return;
-  }
-  cwState.kind = b.dataset.kind;
-  document
-    .querySelectorAll('#cw-kind button')
-    .forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-  renderCw();
-});
-$('#cw-list').addEventListener('click', async e => {
-  const copy = e.target.closest('.copy');
-  if (!copy) {
-    return;
-  }
-  try {
-    await navigator.clipboard.writeText(copy.dataset.copy);
-    copy.textContent = 'Copied ✓';
-  } catch {
-    copy.textContent = 'Select and copy';
-  }
-});
-$('#cw-export').addEventListener('click', () => {
-  const course = cw.courses.find(c => c.id === cwState.course);
-  const name = course ? course.code.replace(/\s+/g, '') : 'PhD-coursework';
-  const blob = new Blob([cw.toRis(cwShown)], {
-    type: 'application/x-research-info-systems',
-  });
-  const a = Object.assign(document.createElement('a'), {
-    href: URL.createObjectURL(blob),
-    download: `${name}-reading-list.ris`,
-  });
-  a.click();
-  URL.revokeObjectURL(a.href);
-});
-window.addEventListener('hashchange', () => {
-  if (!location.hash.startsWith('#book=')) {
-    showView();
-  }
-});
-
-showView();
 load();

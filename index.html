@@ -31,16 +31,8 @@
         <h1>BookHub</h1>
         <p>
           My Zotero library, sorted into my dissertation, exam, coursework and
-          teaching folders, and every reading list from my PhD coursework.
+          teaching folders.
         </p>
-        <nav class="switch" aria-label="Views">
-          <a href="#" data-view="shelf"
-            >My Zotero library <span id="shelf-count"></span
-          ></a>
-          <a href="#coursework" data-view="coursework"
-            >PhD coursework <span id="cw-count"></span
-          ></a>
-        </nav>
         <div class="toolbar" id="shelf-toolbar">
           <label class="search">
             <span class="sr-only">Search books</span>
@@ -98,58 +90,28 @@
             Cited
           </button>
         </div>
+        <div
+          class="chips status-chips"
+          id="req-chips"
+          role="radiogroup"
+          aria-label="Required or recommended"
+          hidden
+        >
+          <button type="button" data-req="" aria-pressed="true">All readings</button>
+          <button type="button" data-req="required" aria-pressed="false">Required</button>
+          <button type="button" data-req="recommended" aria-pressed="false">Recommended</button>
+        </div>
       </div>
     </header>
 
     <main class="wrap" id="view-shelf">
       <div class="statusbar">
-        <p id="status" role="status">Loading your books…</p>
+        <p id="status" role="status">Loading your library…</p>
         <button id="refresh" type="button" class="ghost">
           Refresh from Zotero
         </button>
       </div>
       <div id="books" class="grid" aria-live="polite"></div>
-    </main>
-
-    <main class="wrap" id="view-coursework" hidden>
-      <div class="cw-controls">
-        <label class="cw-search"
-          ><span class="sr-only">Search the reading lists</span>
-          <input
-            id="cw-q"
-            type="search"
-            placeholder="Search author, title, publisher…"
-            autocomplete="off"
-          />
-        </label>
-        <label
-          >Course
-          <select id="cw-course">
-            <option value="">All courses</option>
-          </select>
-        </label>
-        <div
-          class="chips"
-          id="cw-kind"
-          role="radiogroup"
-          aria-label="Reading type"
-        >
-          <button type="button" data-kind="" aria-pressed="true">All</button>
-          <button type="button" data-kind="required" aria-pressed="false">
-            Required
-          </button>
-          <button type="button" data-kind="recommended" aria-pressed="false">
-            Recommended
-          </button>
-        </div>
-      </div>
-      <div class="statusbar">
-        <p id="cw-status" role="status"></p>
-        <button id="cw-export" type="button" class="ghost">
-          Export these to Zotero (.ris)
-        </button>
-      </div>
-      <div id="cw-list"></div>
     </main>
 
     <footer>

@@ -10,13 +10,12 @@ My Zotero library (books, articles, chapters, theses and web pages) shown as a b
 - **Search** across title, author, publisher, series, ISBN, subjects (Zotero tags) and summary.
 - **Sort** by title, author, newest, oldest or recently added; **filter by subject**.
 - **Covers** from Open Library by ISBN (no API key); books without one get a coloured spine with the title.
-- **Filters**: by **folder** (01 Dissertation, 02 Comprehensive exams, 03 PhD coursework, 04 Teaching & ministry and their sub-folders), by **subject** tag, and by **status**: ★ Key source, To read, Read and Cited in dissertation. Key sources get a ★ badge on the shelf.
+- **Filters**: by **folder** (01 Dissertation, 02 Comprehensive exams, 03 PhD coursework, 04 Teaching & ministry and their sub-folders), by **subject** tag, and by **status**: ★ Key source, To read, Read and Cited in dissertation. Key sources get a ★ badge on the shelf. In a PhD coursework folder, a **Required / Recommended** switch uses the course tags from the imported syllabi.
 - **Details**: publication facts (journal, volume and pages for articles), status and subject tags, the folders it sits in, the Zotero abstract as summary, with a note when the summary is a written one rather than the publisher's, and Turabian bibliography and first-footnote entries (for books, chapters, articles, theses and web pages) with Copy buttons. Each book has its own link (`#book=KEY`).
 
 ## PhD coursework reading lists
 
-The **PhD coursework** view lists the required and recommended readings from each PAThS course syllabus (BTH 9053, BTH 9103, BTH 9153, LDR 9053, MIS 9103, RES 9103, RES 9153, EDL 9053), grouped by course, with Turabian entries, Find and Copy buttons, an "In my Zotero" mark for books already in the library, and an export of any selection to a `.ris` file for Zotero.
-The lists live in `src/data/coursework.json`.
+All the required and recommended readings from my PAThS course syllabi were imported into Zotero (the `03 PhD coursework` folder, one sub-folder per course, tagged e.g. `RES 9103 required` / `RES 9103 recommended`), so they appear on the shelf like everything else. The separate coursework view that listed them before has been removed.
 
 ## Settings
 
